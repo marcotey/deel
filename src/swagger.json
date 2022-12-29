@@ -1,0 +1,44 @@
+{
+  "openapi": "3.0.0",
+  "info":{
+      "title": "Deel home task",
+      "description": "This is an API",
+      "version": "1.0.0",
+      "contact":{
+          "email": "marco.antonio1233@gmail.com"
+      }
+  },
+  "paths":{
+      "/contracts/:id":{
+        "get":{
+          "tags": ["Category"],
+          "summary": "it should return the contract only if it belongs to the profile calling",
+          "description":"it should return the contract only if it belongs to the profile calling",
+          "responses":{
+              "200":{
+                  "description":"Success",
+                  "content":{
+                      "application/json":{
+                          "schema":{
+                              "type":"array",
+                              "items":{
+                                  "type":"object",
+                                  "properties":{
+                                      "name": {
+                                          "type": "string"
+                                      },
+                                      "description":{
+                                          "type":"string"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+
+      }
+    }  
+  }
+}
