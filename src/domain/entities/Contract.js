@@ -1,26 +1,35 @@
-const {Sequelize, sequelize} = require('../../infra/sequelize');
-const { Job } = require('../../model');
-const { Profile } = require('../../model');
+const {Sequelize, Model} = require('sequelize');
 
-class Contract extends Sequelize.Model {}
-Contract.init(
-  {
-    terms: {
-      type: Sequelize.TEXT,
-      allowNull: false
+class Contract extends Model {
+  static init(sequelize){
+    super.init(
+    {
+      terms: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      status:{
+        type: Sequelize.ENUM('new','in_progress','terminated')
+      }
     },
-    status:{
-      type: Sequelize.ENUM('new','in_progress','terminated')
+    {
+      sequelize,
+      modelName: 'Contract'
     }
-  },
-  {
-    sequelize,
-    modelName: 'Contract'
-  }
-);
+  );
 
-Contract.belongsTo(Profile, {as: 'Contractor'})
-Contract.belongsTo(Profile, {as: 'Client'})
-Contract.hasMany(Job)
+  }
+  static associate(models){
+    this.belongsTo(models.Profile, {as: 'Contractor'})
+    this.belongsTo(models.Profile, {as: 'Client'})
+    this.hasMany(models.Job)
+}
+}
+
+
+
+
+
+
 
 module.exports = {Contract};

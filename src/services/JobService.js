@@ -12,9 +12,8 @@ module.exports = class JobService extends CommonService {
     try {
           const repository = new JobRepository()
           const profileId = req.profile.id 
-          const models = await req.app.get('models')
 
-          let result = await repository.getAll(profileId, models);
+          let result = await repository.getAll(profileId);
           this.successResponse(res, result, 200);          
       } catch (err) {
           this.errorResponse(res, err.message, 400);
@@ -24,11 +23,10 @@ module.exports = class JobService extends CommonService {
   async post(req, res) {
     try {
           const repository = new JobRepository()
-          const models = await req.app.get('models')
           const client = req.profile
           const {job_id} = req.params
 
-          let result = await repository.post(client, job_id, models);
+          let result = await repository.post(client, job_id);
           this.successResponse(res, result, 200);          
       } catch (err) {
           this.errorResponse(res, err.message, 400);

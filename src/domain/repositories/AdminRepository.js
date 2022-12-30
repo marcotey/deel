@@ -6,7 +6,7 @@ module.exports = class AdminRepository extends CommonRepository {
         super();
     }
 
-    async get(start, end, models) {
+    async get(start, end) {
         try {
           var timestamp = Date.parse(start);
           var timestamp2 = Date.parse(end);
@@ -41,7 +41,7 @@ module.exports = class AdminRepository extends CommonRepository {
 
 
 
-      async getClients(start, end, limit, models) {
+      async getClients(start, end, limit) {
         try {
           var timestamp = Date.parse(start);
           var timestamp2 = Date.parse(end);

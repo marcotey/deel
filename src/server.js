@@ -1,4 +1,6 @@
 const app = require('./app');
+require('./infra/index')
+
 
 init();
 

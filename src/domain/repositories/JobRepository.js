@@ -1,5 +1,8 @@
 'use strict';
 const CommonRepository = require('./CommomRepository');
+const {Contract} = require('../entities/Contract')
+const {Job} = require('../entities/Job')
+const {Profile} = require('../entities/Profile')
 
 
 module.exports = class JobRepository extends CommonRepository {
@@ -7,9 +10,7 @@ module.exports = class JobRepository extends CommonRepository {
         super();
     }
 
-    async getAll(profileId, models) {
-      const {Contract} = models
-      const {Job} = models
+    async getAll(profileId) {
         try {
           const jobs = await Contract.findAll({where: {[this._Op.or]: [
             { ClientId: profileId },
@@ -24,7 +25,7 @@ module.exports = class JobRepository extends CommonRepository {
         })
     
     
-        if(!jobs) return Error('getAll: no jobs found')
+        if(!jobs) throw new Error('getAll: no jobs found')
         return jobs
         } catch (err) {
            throw new Error('getAll: ' +  err.message);
@@ -32,10 +33,7 @@ module.exports = class JobRepository extends CommonRepository {
     } 
     
     
-   async post(client, job_id, models){
-    const {Contract} = models
-    const {Job} = models
-    const {Profile} = models
+   async post(client, job_id){
 
     const t = await this._sequelize.transaction({isolationLevel: this._Transaction.ISOLATION_LEVELS.SERIALIZABLE});
 
@@ -45,7 +43,7 @@ module.exports = class JobRepository extends CommonRepository {
 
     const canPay = (client.balance >= job.price)
 
-    if (!canPay) return res.status(400).json({message:`This profile can't pay for the job`})
+    if (!canPay) throw new Error(`This profile can't pay for the job`)
     
     const contractor = await Profile.findByPk(contract.ContractorId)
     

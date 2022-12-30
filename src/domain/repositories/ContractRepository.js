@@ -1,14 +1,13 @@
 'use strict';
 const CommonRepository = require('./CommomRepository');
-//const Contract = require('../entities/Contract')
+const {Contract} = require('../entities/Contract')
 
 module.exports = class ContractRepository extends CommonRepository {
     constructor() { 
         super();
     }
 
-    async getContractById(id, profileId, models) {
-      const {Contract} = models
+    async getContractById(id, profileId) {
         try {
           const result = await Contract.findOne({where: {id: id, ClientId: profileId}})
           return result
@@ -17,8 +16,7 @@ module.exports = class ContractRepository extends CommonRepository {
         }
     }
 
-    async getAll(profileId, models) {
-      const {Contract} = models
+    async getAll(profileId) {
       try {
         const contract = await Contract.findAll({where: {[this._Op.or]: [
             { ClientId: profileId },

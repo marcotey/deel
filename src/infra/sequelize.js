@@ -8,7 +8,6 @@ const sequelize = new Sequelize({
 
 module.exports = {
   sequelize,
-  Sequelize,
   Op,
   Transaction
 };

@@ -1,18 +1,16 @@
 'use strict';
 const CommonRepository = require('./CommomRepository');
+const {Contract} = require('../entities/Contract')
+const {Job} = require('../entities/Job')
+const {Profile} = require('../entities/Profile')
 
 module.exports = class BalanceRepository extends CommonRepository {
     constructor() { 
         super();
     }
 
-    async post(client, userId, amount, models) {
-      const {Contract} = models
-      const {Job} = models
-      const {Profile} = models
+    async post(client, userId, amount) {
       const t = await this._sequelize.transaction({isolationLevel: this._Transaction.ISOLATION_LEVELS.SERIALIZABLE});
-
- 
     
     try {
 
